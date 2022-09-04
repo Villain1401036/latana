@@ -1,0 +1,1 @@
+This project is for the Data Engineer takehome work (Latana)
