@@ -2,7 +2,7 @@
 from modules import utils 
 from airflow import DAG 
 from airflow.operators.python import PythonOperator
-from datetime import timedelta
+from datetime import timedelta, datetime
 
 with DAG(
   'posts',
@@ -13,6 +13,7 @@ with DAG(
         'email_on_retry': False,
         'retries': 1,
         'retry_delay': timedelta(minutes=5),
+        'provide_context':False,
         # 'queue': 'bash_queue',
         # 'pool': 'backfill',
         # 'priority_weight': 10,
@@ -30,7 +31,7 @@ with DAG(
     schedule_interval= "* 0 * * *",
     start_date=datetime(2021, 1, 1),
     catchup=False,
-    provide_context=False,
+    
     tags=['example'],
                 ) as dag:
     #write all the operaters that are to be used

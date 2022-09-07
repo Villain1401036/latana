@@ -30,7 +30,7 @@ with DAG(
     schedule_interval= "* 0 * * *",
     start_date=datetime(2021, 1, 1),
     catchup=False,
-    provide_context=False,
+    
     tags=['example'],
                 ) as dag:
     #write all the operaters that are to be used
