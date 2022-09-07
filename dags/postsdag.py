@@ -59,7 +59,7 @@ with DAG(
     )
 
     insert_posts_stg=PythonOperator(
-        tasks_id = 'insert_posts_stg',
+        task_id = 'insert_posts_stg',
         python_callable=utils.insert_to_STG,
          op_kwargs={
             'src_folder':'home/rahul/reddit/transformed/',
@@ -69,7 +69,7 @@ with DAG(
     )
 
     cdc = PythonOperator(
-        tasks_id = 'cdc',
+        task_id = 'cdc',
         python_callable=utils.change_data_capture,
         op_kwargs={
             
