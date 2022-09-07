@@ -1,8 +1,8 @@
-import datetime
+
 from modules import utils 
 from airflow import DAG 
 from airflow.operators.python import PythonOperator
-from datetime import timedelta
+from datetime import timedelta , datetime
 
 with DAG(
   'posts',

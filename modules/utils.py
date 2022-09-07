@@ -7,7 +7,7 @@ import csv
 import pandas as pd
 import numpy as np
 import psycopg2
-import psycopg2.extras as extras
+import psycopg2.extras as extrass
 import pandas.io.sql as sqlio
 import os 
 import glob
