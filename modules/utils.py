@@ -44,7 +44,7 @@ def write_transformed(df , destfolder='/home/rahul/reddit/posts_transformed/', d
         if writeformat == "parquet":
             df.to_parquet( destfolder+dest_file+".parquet" )
         else:
-            df.to_csv( destfolder+dest_file+".csv",sep="|" , index=False ,quotechar=".." )
+            df.to_csv( destfolder+dest_file+".csv",sep="|" , index=False ,quotechar="*" )
 
     except Exception as e :
         raise e
