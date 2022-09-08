@@ -53,7 +53,7 @@ with DAG(
         python_callable= utils.transformdata_raw,
          op_kwargs={
             "dest_file":"posts",
-            "src_file":'home/rahul/reddit/allposts.csv',
+            "src_file":'/home/rahul/reddit/allposts.csv',
             "dtype":{"created_utc":int,'score':int,'ups':int,'downs':int,'permalink':str,'id':str,'subreddit_id':str}
         },
 
@@ -64,7 +64,7 @@ with DAG(
         python_callable=utils.insert_to_STG,
          op_kwargs={
             'conn': psycopg2.connect(database="redditdatabase", user='rahul', password='Cherry@07', host='127.0.0.1', port='5432'),
-            'src_folder':'home/rahul/reddit/transformed/'
+            'src_folder':'/home/rahul/reddit/posts_transformed/'
         },
         dag=dag
     )

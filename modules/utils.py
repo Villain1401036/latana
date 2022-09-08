@@ -37,7 +37,7 @@ def pull_data(url,dest_file):
         raise e
 
 
-def write_transformed(df , dest_file, destfolder='/home/rahul/reddit/postscleaned/',writeformat="csv" ):
+def write_transformed(df , destfolder='/home/rahul/reddit/posts_transformed/', dest_file='posts_',writeformat="csv" ):
     try:
         # df.to_csv( "home/rahul/reddit/transformed/"+dest_file,sep="|" )
         # df.to_csv( "C:\\Users\\kr716\\OneDrive\\Desktop\\newfol\\"+dest_file,sep="|" )
@@ -50,7 +50,7 @@ def write_transformed(df , dest_file, destfolder='/home/rahul/reddit/postscleane
         raise e
 
 
-def transformdata_raw(src_file,destfile,dtype=None):
+def transformdata_raw(src_file,destfolder,dtype=None):
 
     def changeedited_tobool(x):
         if x == "True":
@@ -84,7 +84,7 @@ def transformdata_raw(src_file,destfile,dtype=None):
             df = df.dropna(subset=['id', 'subreddit_id'])
 
 
-            write_transformed(data,destfile+"_"+str(count_file))
+            write_transformed(data,destfolder,"posts_"+str(count_file))
             count_file += 1
 
     except Exception as e:
