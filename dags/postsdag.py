@@ -1,9 +1,16 @@
 
-from modules.utils import transformdata_raw ,  insert_to_STG ,pull_data ,change_data_capture
+
 from airflow import DAG 
 from airflow.operators.python import PythonOperator
 from datetime import timedelta, datetime
 import psycopg2
+
+
+import sys
+
+sys.path.append('/home/rahul/latana')
+
+from modules import utils
 
 with DAG(
   'posts',
@@ -50,7 +57,7 @@ with DAG(
 
     transform_posts= PythonOperator(
         task_id = 'transform_posts',
-        python_callable= transformdata_raw,
+        python_callable= utils.transformdata_raw,
          op_kwargs={
             "src_file":'/home/rahul/reddit/allposts.csv',
             "dtype":{"created_utc":int,'score':int,'ups':int,'downs':int,'permalink':str,'id':str,'subreddit_id':str}
@@ -60,7 +67,7 @@ with DAG(
 
     insert_posts_stg=PythonOperator(
         task_id = 'insert_posts_stg',
-        python_callable=insert_to_STG,
+        python_callable=utils.insert_to_STG,
          op_kwargs={
             'conn': psycopg2.connect(database="redditdatabase", user='rahul', password='Cherry@07', host='127.0.0.1', port='5432'),
             'src_folder':'/home/rahul/reddit/posts_transformed/'
@@ -70,7 +77,7 @@ with DAG(
 
     cdc = PythonOperator(
         task_id = 'cdc',
-        python_callable=change_data_capture,
+        python_callable=utils.change_data_capture,
         op_kwargs={
             'conn': psycopg2.connect(database="redditdatabase", user='rahul', password='Cherry@07', host='127.0.0.1', port='5432'),
             'columns':["created_utc",'score','ups','downs','permalink','id','subreddit_id'],
