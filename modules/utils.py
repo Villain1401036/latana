@@ -86,8 +86,10 @@ def transformdata_raw(src_file,destfolder='/home/rahul/reddit/posts_transformed/
 
 
 
-            data["selftext"] = data["selftext"].replace("\n","" ).replace("\t","").replace("\r").replace("\r","").replace("|",",")
-            data["title"] = data["title"].replace("\n","" ).replace("\t","").replace("\r","").replace("|",",")
+            data["selftext"] = data["selftext"].replace("\n","" ).replace("\t","").replace("\r").replace("\r","").replace("|","")
+            data["title"] = data["title"].replace("\n","" ).replace("\t","").replace("\r","").replace("|","")
+            data["title"] = data["title"].replace("\n","" ).replace("\t","").replace("\r","").replace("|","")
+
 
 
 
