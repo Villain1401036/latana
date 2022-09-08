@@ -39,12 +39,14 @@ def pull_data(url,dest_file):
 
 def write_transformed(df , destfolder='/home/rahul/reddit/posts_transformed/', dest_file='posts_',writeformat="csv" ):
     try:
-        # df.to_csv( "home/rahul/reddit/transformed/"+dest_file,sep="|" )
-        # df.to_csv( "C:\\Users\\kr716\\OneDrive\\Desktop\\newfol\\"+dest_file,sep="|" )
+        df.replace("\\n",'',regex=True,inplace=True)
+        df.replace("|",'',regex=True,inplace=True)
+
         if writeformat == "parquet":
             df.to_parquet( destfolder+dest_file+".parquet" )
         else:
-            df.to_csv( destfolder+dest_file+".csv",sep="|" , index=False ,quotechar="*" )
+
+            df.to_csv( destfolder+dest_file+".csv",sep="|" , na_rep='' , index=False ,quoting=csv.QUOTE_NONE  )
 
     except Exception as e :
         raise e
@@ -89,10 +91,6 @@ def transformdata_raw(src_file,destfolder='/home/rahul/reddit/posts_transformed/
             data["selftext"] = data["selftext"].replace("\n","" ).replace("\t","").replace("\r").replace("\r","").replace("|","")
             data["title"] = data["title"].replace("\n","" ).replace("\t","").replace("\r","").replace("|","")
             data["title"] = data["title"].replace("\n","" ).replace("\t","").replace("\r","").replace("|","")
-
-
-
-
 
             data = data.dropna(subset=['id', 'subreddit_id'])
 
