@@ -75,13 +75,13 @@ def transformdata_raw(src_file,destfolder='/home/rahul/reddit/posts_transformed/
         for data in df:
             #clean the dataframe
             #change the date in timestamp format 
-            df["created_utc"] =  df["created_utc"].map(lambda x: pd.to_datetime(x,unit='s'))
+            data["created_utc"] =  data["created_utc"].map(lambda x: pd.to_datetime(x,unit='s'))
 
             #change the bool/float column to float so that we can use it later
-            df["edited"] = df["edited"].apply(changeedited_tofloat)
-            df["over_18"] = df["over_18"].fillna(True)
+            data["edited"] = data["edited"].apply(changeedited_tofloat)
+            data["over_18"] = data["over_18"].fillna(True)
             #remove data where there is nan in id or subreddit_id
-            df = df.dropna(subset=['id', 'subreddit_id'])
+            data = data.dropna(subset=['id', 'subreddit_id'])
 
 
             write_transformed(data,destfolder,"posts_"+str(count_file))
