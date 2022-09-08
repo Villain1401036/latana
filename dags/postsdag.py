@@ -3,6 +3,7 @@ from modules import utils
 from airflow import DAG 
 from airflow.operators.python import PythonOperator
 from datetime import timedelta, datetime
+import psycopg2
 
 with DAG(
   'posts',
@@ -42,7 +43,7 @@ with DAG(
         
         op_kwargs={
             "url":"https://latana-data-eng-challenge.s3.eu-central-1.amazonaws.com/allposts.csv",
-            "dest_file":"home/rahul/reddit/allposts.csv"
+            "dest_file":"/home/rahul/reddit/allposts.csv"
         },
         dag=dag
     )
@@ -55,15 +56,15 @@ with DAG(
             "src_file":'home/rahul/reddit/allposts.csv',
             "dtype":{"created_utc":int,'score':int,'ups':int,'downs':int,'permalink':str,'id':str,'subreddit_id':str}
         },
-        dag=dag
+
     )
 
     insert_posts_stg=PythonOperator(
         task_id = 'insert_posts_stg',
         python_callable=utils.insert_to_STG,
          op_kwargs={
-            'src_folder':'home/rahul/reddit/transformed/',
-            "dtype":{"created_utc":int,'score':int,'ups':int,'downs':int,'permalink':str,'id':str,'subreddit_id':str}
+            'conn': psycopg2.connect(database="redditdatabase", user='rahul', password='Cherry@07', host='127.0.0.1', port='5432'),
+            'src_folder':'home/rahul/reddit/transformed/'
         },
         dag=dag
     )
@@ -72,7 +73,9 @@ with DAG(
         task_id = 'cdc',
         python_callable=utils.change_data_capture,
         op_kwargs={
-            
+            'conn': psycopg2.connect(database="redditdatabase", user='rahul', password='Cherry@07', host='127.0.0.1', port='5432'),
+            'columns':["created_utc",'score','ups','downs','permalink','id','subreddit_id'],
+           'dest_table':'posts_2013'
         },
         dag=dag
     )
