@@ -92,6 +92,7 @@ def transformdata_raw(src_file,destfolder='/home/rahul/reddit/posts_transformed/
 
             data["selftext"] = data["selftext"].str.replace("\n","" ).str.replace("\t","").str.replace("\r","").str.replace("|","").str.replace('"','')
             data["title"] = data["title"].str.replace("\n","").str.replace("\t","").str.replace("\r","").str.replace("|","").str.replace('"','')
+            data["link_flair_text"] = data["link_flair_text"].str.replace("\n","").str.replace("\t","").str.replace("\r","").str.replace("|","&").str.replace('"','')
             
 
             data = data.dropna(subset=['id', 'subreddit_id'])
