@@ -48,7 +48,7 @@ def write_transformed(df , destfolder='/home/rahul/reddit/posts_transformed/', d
             df.to_parquet( destfolder+dest_file+".parquet" )
         else:
 
-            df.to_csv( destfolder+dest_file+".csv",sep="|" , na_rep='' ,escapechar='\\', index=False ,quoting=csv.QUOTE_NONE  )
+            df.to_csv( destfolder+dest_file+".csv",sep="|" , na_rep='' ,escapechar='\\', index=False ,quoting=csv.QUOTE_NONE ,quotechar="-")
 
     except Exception as e :
         raise e
@@ -90,8 +90,8 @@ def transformdata_raw(src_file,destfolder='/home/rahul/reddit/posts_transformed/
 
 
 
-            data["selftext"] = data["selftext"].str.replace('|',"",regex=True)
-            data["title"] = data["title"].str.replace('|',"",regex=True)
+            data["selftext"] = data["selftext"].str.replace("\n","" ).str.replace("\t","").str.replace("\r").str.replace("\r","").str.replace("|","")
+            data["title"] = data["title"].str.replace("\n","").str.replace("\t","").str.replace("\r","").str.replace("|","")
             
 
             data = data.dropna(subset=['id', 'subreddit_id'])
