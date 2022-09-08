@@ -37,22 +37,21 @@ with DAG(
                 ) as dag:
     #write all the operaters that are to be used
     
-    pull_posts = PythonOperator(
-        task_id='pull_posts',
-        python_callable= utils.pull_data,
+    # pull_posts = PythonOperator(
+    #     task_id='pull_posts',
+    #     python_callable= utils.pull_data,
         
-        op_kwargs={
-            "url":"https://latana-data-eng-challenge.s3.eu-central-1.amazonaws.com/allposts.csv",
-            "dest_file":"/home/rahul/reddit/allposts.csv"
-        },
-        dag=dag
-    )
+    #     op_kwargs={
+    #         "url":"https://latana-data-eng-challenge.s3.eu-central-1.amazonaws.com/allposts.csv",
+    #         "dest_file":"/home/rahul/reddit/allposts.csv"
+    #     },
+    #     dag=dag
+    # )
 
     transform_posts= PythonOperator(
         task_id = 'transform_posts',
         python_callable= utils.transformdata_raw,
          op_kwargs={
-            "dest_file":"posts",
             "src_file":'/home/rahul/reddit/allposts.csv',
             "dtype":{"created_utc":int,'score':int,'ups':int,'downs':int,'permalink':str,'id':str,'subreddit_id':str}
         },
@@ -80,5 +79,6 @@ with DAG(
         dag=dag
     )
 
-pull_posts >>   transform_posts >> insert_posts_stg >> cdc 
+# pull_posts >> 
+transform_posts >> insert_posts_stg >> cdc 
     
