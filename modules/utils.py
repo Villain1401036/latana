@@ -42,7 +42,7 @@ def write_transformed(df , destfolder='/home/rahul/reddit/posts_transformed/', d
         df.replace("\n",'',regex=True,inplace=True)
         df.replace("\\n",'',regex=True,inplace=True)
 
-        df.replace("|",'',regex=True,inplace=True)
+        
 
         if writeformat == "parquet":
             df.to_parquet( destfolder+dest_file+".parquet" )
@@ -90,8 +90,8 @@ def transformdata_raw(src_file,destfolder='/home/rahul/reddit/posts_transformed/
 
 
 
-            data["selftext"] = data["selftext"].str.replace("\n","" ).str.replace("\t","").str.replace("\r","").str.replace("|","")
-            data["title"] = data["title"].str.replace("\n","").str.replace("\t","").str.replace("\r","").str.replace("|","")
+            data["selftext"] = data["selftext"].str.replace("\n","" ).str.replace("\t","").str.replace("\r","").str.replace("|","").str.replace('"','')
+            data["title"] = data["title"].str.replace("\n","").str.replace("\t","").str.replace("\r","").str.replace("|","").str.replace('"','')
             
 
             data = data.dropna(subset=['id', 'subreddit_id'])
