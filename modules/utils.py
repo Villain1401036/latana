@@ -39,14 +39,14 @@ def pull_data(url,dest_file):
 
 def write_transformed(df , destfolder='/home/rahul/reddit/posts_transformed/', dest_file='posts_',writeformat="csv" ):
     try:
-        df.replace("\\n",'',regex=True,inplace=True)
+        df.replace("\n",'',regex=True,inplace=True)
         df.replace("|",'',regex=True,inplace=True)
 
         if writeformat == "parquet":
             df.to_parquet( destfolder+dest_file+".parquet" )
         else:
 
-            df.to_csv( destfolder+dest_file+".csv",sep="|" , na_rep='' , index=False ,quoting=csv.QUOTE_NONE  )
+            df.to_csv( destfolder+dest_file+".csv",sep="|" , na_rep='' , index=False ,quoting=csv.QUOTE_NONE , )
 
     except Exception as e :
         raise e
