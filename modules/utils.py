@@ -50,7 +50,7 @@ def write_transformed(df , destfolder='/home/rahul/reddit/posts_transformed/', d
         raise e
 
 
-def transformdata_raw(src_file,destfolder,dtype=None):
+def transformdata_raw(src_file,destfolder='/home/rahul/reddit/posts_transformed/',dtype=None):
 
     def changeedited_tobool(x):
         if x == "True":
